@@ -19,13 +19,19 @@ class App extends Component {
           >
             如果是单数就+1
           </button>
-          <button id="add1After2Sec" onClick={() => this.props.add1After2Sec()}>
-            两秒后+1
-          </button>
+          <Button cb={() => this.props.add1After2Sec()} />
         </div>
       </div>
     );
   }
+}
+
+function Button(props) {
+  return (
+    <button id="add1After2Sec" onClick={() => props.cb()}>
+      两秒后+1
+    </button>
+  );
 }
 
 function mapStateToProps(state) {

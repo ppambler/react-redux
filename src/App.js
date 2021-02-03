@@ -4,7 +4,7 @@ console.log(Component)
 
 class App extends Component {
   add1() {
-    this.props.onAdd1()
+    this.props.store.dispatch({type:'add',payload:1})
   }
   add2() {
     this.props.onAdd2()

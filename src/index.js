@@ -38,8 +38,8 @@ function add4() {
 }
 
 function render() {
-  ReactDOM.render(<App value={store.getState()}
-    onAdd1={() => { store.dispatch({ type: 'add', payload: 1 }) }}
+  ReactDOM.render(<App value={store.getState()} store={store}
+    // onAdd1={() => { store.dispatch({ type: 'add', payload: 1 }) }}
     onAdd2={() => { store.dispatch({ type: 'add', payload: 2 }) }}
     onAdd3={add3}
     onAdd4={add4}

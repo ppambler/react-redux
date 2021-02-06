@@ -1,69 +1,53 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import "./index.css";
 
-function F1(props) {
-  return (
-    <div className="bordered">
-      1111
-      <F2 />
-    </div>
-  );
-}
-function F2(props) {
-  return (
-    <div className="bordered">
-      2222
-      <F3 />
-    </div>
-  );
-}
-function F3(props) {
-  return (
-    <div className="bordered">
-      3333
-      <nContext.Consumer>
-        {(x) => <F4 n4={x.n} setN={x.setN} />}
-      </nContext.Consumer>
-    </div>
-  );
-}
-function F4(props) {
-  return (
-    <div className="bordered">
-      4444, {props.n4}
-      <button onClick={props.setN}>Click me</button>
-    </div>
-  );
-}
+const themeContext = React.createContext();
 
-const nContext = React.createContext();
+function Box(props) {
+  return <div className={`box ${props.theme}`}>{props.children}</div>;
+}
+function Button() {
+  return <button className="button">button</button>;
+}
+function Input() {
+  return <input className="input is-primary" />;
+}
 
 class App extends React.Component {
+  change = () => {
+    if (this.state.theme === "green") {
+      this.setState({ theme: "red" });
+    } else {
+      this.setState({ theme: "green" });
+    }
+  };
   constructor() {
     super();
     this.state = {
-      x: {
-        n: 67,
-        setN: () => {
-          this.setState({
-            x: {
-              ...this.state.x,
-              n: this.state.x.n + 1,
-            },
-          });
-          console.log("执行完毕");
-        },
-      },
+      theme: "green",
     };
   }
   render() {
     return (
-      <div>
-        <nContext.Provider value={this.state.x}>
-          <F1 />
-        </nContext.Provider>
-      </div>
+      <themeContext.Provider value={this.state.theme}>
+        <div className="App">
+          <button onClick={this.change} className="button">换肤</button>
+          <themeContext.Consumer>
+            {(theme) => (
+              <div>
+                <Box theme={theme}>
+                  <Button />
+                </Box>
+                <Box theme={theme}>
+                  <Input />
+                </Box>
+              </div>
+            )}
+          </themeContext.Consumer>
+        </div>
+      </themeContext.Provider>
     );
   }
 }
